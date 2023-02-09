@@ -1,4 +1,7 @@
 {
+  "webserver_status": "healthy",
+  "webserver_downtime": "2023-02-09 15:08:05",
+  "webserver_recovered": true,
   "metadatabase_status": "healthy",
   "metadatabase_downtime": "2023-02-09 14:51:01",
   "metadatabase_recovered": true,
