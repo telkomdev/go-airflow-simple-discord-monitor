@@ -1,0 +1,7 @@
+{
+    "airflow_url": "https://my-airflow-server.local",
+    "interval": 60,
+    "discord_thread_url": "https://my-discord-webhook",
+    "discord_name": "My Bot",
+    "discord_avatar_url": "https://my-domain/my-avatar.jpg"
+}
