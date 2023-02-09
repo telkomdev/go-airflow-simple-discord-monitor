@@ -4,6 +4,7 @@ Simple Airflow monitor with Discord written in Go
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](https://go.dev/)
 [![Go Reference](https://pkg.go.dev/badge/github.com/telkomdev/go-airflow-simple-discord-monitor.svg)](https://pkg.go.dev/github.com/telkomdev/go-airflow-simple-discord-monitor)
 [![Go Report Card](https://goreportcard.com/badge/github.com/telkomdev/go-airflow-simple-discord-monitor)](https://goreportcard.com/badge/github.com/telkomdev/go-airflow-simple-discord-monitor)
+[![GitHub license](https://img.shields.io/github/license/telkomdev/go-airflow-simple-discord-monitor.svg)](https://github.com/telkomdev/go-airflow-simple-discord-monitor/blob/master/LICENSE)
 
 ### Build
 ```shell
