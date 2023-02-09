@@ -38,6 +38,9 @@ type AirflowResponse struct {
 }
 
 type AirflowStatus struct {
+	WebserverStatus       string `json:"webserver_status"`
+	WebserverDownTime     string `json:"webserver_downtime"`
+	WebserverRecovered    bool   `json:"webserver_recovered"`
 	MetadatabaseStatus    string `json:"metadatabase_status"`
 	MetadatabaseDownTime  string `json:"metadatabase_downtime"`
 	MetadatabaseRecovered bool   `json:"metadatabase_recovered"`
@@ -154,16 +157,37 @@ func listen(cfg *Configuration) {
 	for range time.Tick(time.Duration(interval) * time.Second) {
 		fmt.Println("info: Executing health check")
 
+		timeNow := time.Now().Format(YYMMDD)
+
 		err, airflowResponse = getAirflowStatus(cfg)
 		if err != nil {
 			fmt.Println("error: " + err.Error())
+			airflowStatus.WebserverStatus = "unhealthy"
+			if airflowStatus.WebserverRecovered {
+				airflowStatus.WebserverDownTime = timeNow
+				fmt.Println("info: Webserver is unhealthy, send alert to Discord ...")
+				// send notif down
+				sendNotificationDiscord(cfg, "Monitor is DOWN: airflow-webserver. Hi @here, please check service status")
+			}
+			airflowStatus.WebserverRecovered = false
+			saveAirfloStatus(airflowStatus)
 			continue
+		}
+
+		if airflowStatus.WebserverStatus != "healthy" {
+			fmt.Println("Info: Webserver health recovered, send alert to Discord ...")
+			// calculate time diff in minutes
+			minutesDiff := minutesDifference(airflowStatus.WebserverDownTime, timeNow)
+			// send notif down
+			sendNotificationDiscord(cfg, "Monitor is UP: airflow-webserver. Hi @here, it was down for "+minutesDiff)
+			airflowStatus.WebserverStatus = "healthy"
+			airflowStatus.WebserverRecovered = true
+			saveAirfloStatus(airflowStatus)
 		}
 
 		airflowStatus.MetadatabaseStatus = "" + airflowResponse.Metadatabase.Status
 		airflowStatus.SchedulerStatus = "" + airflowResponse.Scheduler.Status
 
-		timeNow := time.Now().Format(YYMMDD)
 		if airflowStatus.MetadatabaseStatus != "healthy" {
 			fmt.Println("info: Scheduler is unhealthy")
 			if airflowStatus.MetadatabaseRecovered {
