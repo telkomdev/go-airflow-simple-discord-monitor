@@ -35,6 +35,9 @@ info: Executing health check
 ...
 ```
 
+### Example generated alert
+![Alt text](/screenshots/example-discord-alert.png?raw=true "Discord Alert")
+
 ### Todo
 - Add unit test
 - Improve documentation
