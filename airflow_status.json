@@ -1,0 +1,8 @@
+{
+  "metadatabase_status": "healthy",
+  "metadatabase_downtime": "2023-02-09 14:51:01",
+  "metadatabase_recovered": true,
+  "scheduler_status": "healthy",
+  "scheduler_downtime": "2023-02-09 14:52:13",
+  "scheduler_recovered": true
+}
